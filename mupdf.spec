@@ -12,6 +12,7 @@ URL:            http://mupdf.com/
 Source0:        http://mupdf.com/download/mupdf-%{version}.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  libx11-devel
+BuildRequires:  libxext-devel
 BuildRequires:  zlib-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  freetype2-devel
