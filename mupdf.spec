@@ -10,6 +10,7 @@ License:        GPL
 Group:          Office
 URL:            http://mupdf.com/
 Source0:        http://mupdf.com/download/mupdf-%{version}.tar.gz
+Patch0:         makefile-libdir.patch
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  libx11-devel
 BuildRequires:  libxext-devel
@@ -49,13 +50,14 @@ applications that use %{libname}.
 
 %prep
 %setup
+%patch0
 
 %build
 %make
 
 %install
 rm -rf %{buildroot}
-%make install prefix=%{buildroot}/usr
+%make install prefix=%{buildroot}/usr LIBDIR=%{buildroot}%{_libdir}
 
 %files
 %defattr(-,root,root)
