@@ -58,6 +58,7 @@ applications that use %{libname}.
 rm -rf %{buildroot}
 %makeinstall
 install -D -m 644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
+install -D -m 644 debian/mupdf.png %buildroot%_datadir/pixmaps/%name.png
 
 %files
 %defattr(-,root,root)
@@ -71,6 +72,7 @@ install -D -m 644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 %{_bindir}/xpsdraw
 %_mandir/man1/*
 %_datadir/applications/%name.desktop
+%_datadir/pixmaps/%name.png
 
 %files -n %{develname}
 %defattr(-,root,root)
