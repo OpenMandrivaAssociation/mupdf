@@ -4,12 +4,13 @@
 
 Name:           %{name}
 Version:        0.9
-Release:        %mkrel 1
+Release:        %mkrel 2
 Summary:        MuPDF is a lightweight PDF viewer and toolkit written in portable C
 License:        GPLv3
 Group:          Office
 URL:            http://mupdf.com/
 Source0:        http://mupdf.googlecode.com/files/mupdf-%version-source.tar.gz
+Source1:	mupdf.desktop
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  libx11-devel
 BuildRequires:  libxext-devel
@@ -56,6 +57,7 @@ applications that use %{libname}.
 %install
 rm -rf %{buildroot}
 %makeinstall
+install -D -m 644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
 
 %files
 %defattr(-,root,root)
@@ -68,6 +70,7 @@ rm -rf %{buildroot}
 %{_bindir}/pdfshow
 %{_bindir}/xpsdraw
 %_mandir/man1/*
+%_datadir/applications/%name.desktop
 
 %files -n %{develname}
 %defattr(-,root,root)
