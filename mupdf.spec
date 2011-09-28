@@ -3,14 +3,13 @@
 %define develname %mklibname -d %{name}
 
 Name:           %{name}
-Version:        0.7
+Version:        0.9
 Release:        %mkrel 1
 Summary:        MuPDF is a lightweight PDF viewer and toolkit written in portable C
-License:        GPL
+License:        GPLv3
 Group:          Office
 URL:            http://mupdf.com/
-Source0:        http://mupdf.com/download/mupdf-%{version}.tar.gz
-Patch0:         makefile-libdir.patch
+Source0:        http://mupdf.googlecode.com/files/mupdf-%version-source.tar.gz
 BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  libx11-devel
 BuildRequires:  libxext-devel
@@ -49,15 +48,14 @@ The %{develname} package contains header files for developing
 applications that use %{libname}.
 
 %prep
-%setup
-%patch0
+%setup -q
 
 %build
 %make
 
 %install
 rm -rf %{buildroot}
-%make install prefix=%{buildroot}/usr LIBDIR=%{buildroot}%{_libdir}
+%makeinstall
 
 %files
 %defattr(-,root,root)
@@ -68,9 +66,14 @@ rm -rf %{buildroot}
 %{_bindir}/pdfextract
 %{_bindir}/pdfinfo
 %{_bindir}/pdfshow
+%{_bindir}/xpsdraw
+%_mandir/man1/*
 
 %files -n %{develname}
 %defattr(-,root,root)
+%{_libdir}/libfitz.a
 %{_libdir}/libmupdf.a
+%{_libdir}/libmuxps.a
 %{_includedir}/fitz.h
 %{_includedir}/mupdf.h
+%{_includedir}/muxps.h
