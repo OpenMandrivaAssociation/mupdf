@@ -64,13 +64,12 @@ install -D -m 644 debian/mupdf.png %buildroot%_datadir/pixmaps/%name.png
 %files
 %defattr(-,root,root)
 %doc COPYING README
+%{_bindir}/mudraw
 %{_bindir}/mupdf
-%{_bindir}/pdfclean
-%{_bindir}/pdfdraw
-%{_bindir}/pdfextract
-%{_bindir}/pdfinfo
-%{_bindir}/pdfshow
-%{_bindir}/xpsdraw
+%{_bindir}/mupdfclean
+%{_bindir}/mupdfextract
+%{_bindir}/mupdfinfo
+%{_bindir}/mupdfshow
 %_mandir/man1/*
 %_datadir/applications/%name.desktop
 %_datadir/pixmaps/%name.png
@@ -78,8 +77,8 @@ install -D -m 644 debian/mupdf.png %buildroot%_datadir/pixmaps/%name.png
 %files -n %{develname}
 %defattr(-,root,root)
 %{_libdir}/libfitz.a
-%{_libdir}/libmupdf.a
-%{_libdir}/libmuxps.a
 %{_includedir}/fitz.h
+%{_includedir}/memento.h
+%{_includedir}/mucbz.h
 %{_includedir}/mupdf.h
 %{_includedir}/muxps.h
