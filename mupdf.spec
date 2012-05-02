@@ -52,7 +52,7 @@ applications that use %{libname}.
 %setup -q -n %name-%version-source
 
 %build
-%make
+%make XCFLAGS="%optflags $(pkg-config --cflags libopenjpeg1)"
 
 %install
 rm -rf %{buildroot}
