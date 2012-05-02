@@ -3,8 +3,8 @@
 %define develname %mklibname -d %{name}
 
 Name:           %{name}
-Version:        0.9
-Release:        %mkrel 2
+Version:        1.0
+Release:        %mkrel 1
 Summary:        MuPDF is a lightweight PDF viewer and toolkit written in portable C
 License:        GPLv3
 Group:          Office
