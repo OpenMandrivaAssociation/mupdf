@@ -52,7 +52,8 @@ applications that use %{libname}.
 %setup -q -n %name-%version-source
 
 %build
-%make XCFLAGS="%optflags $(pkg-config --cflags libopenjpeg1)"
+#gw pkg-config --cflags doesn't have the right openjpeg flags
+%make XCFLAGS="%optflags -I%_includedir/openjpeg-1.5"
 
 %install
 rm -rf %{buildroot}
