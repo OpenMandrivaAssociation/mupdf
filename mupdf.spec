@@ -49,7 +49,7 @@ The %{develname} package contains header files for developing
 applications that use %{libname}.
 
 %prep
-%setup -q
+%setup -q -n %name-%version-source
 
 %build
 %make
