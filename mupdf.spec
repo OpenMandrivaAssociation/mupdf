@@ -18,7 +18,7 @@ BuildRequires:  zlib-devel
 BuildRequires:  libjpeg-devel
 BuildRequires:  freetype2-devel
 BuildRequires:  jbig2dec-devel
-BuildRequires:  openjpeg-devel
+BuildRequires:  openjpeg-devel >= 1.5
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
