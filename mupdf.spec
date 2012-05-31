@@ -1,17 +1,15 @@
-%define name      mupdf
-%define libname   %mklibname %{name}
-%define develname %mklibname -d %{name}
+%define	libname	%mklibname %{name}
+%define	devname	%mklibname -d %{name}
 
-Name:           %{name}
+Name:           mupdf
 Version:        1.0
-Release:        %mkrel 1
+Release:        2
 Summary:        MuPDF is a lightweight PDF viewer and toolkit written in portable C
 License:        GPLv3
 Group:          Office
 URL:            http://mupdf.com/
-Source0:        http://mupdf.googlecode.com/files/mupdf-%version-source.tar.gz
+Source0:        http://mupdf.googlecode.com/files/%{name}-%{version}-source.tar.gz
 Source1:	mupdf.desktop
-BuildRoot:      %{_tmppath}/%{name}-%{version}-%{release}
 BuildRequires:  libx11-devel
 BuildRequires:  libxext-devel
 BuildRequires:  zlib-devel
@@ -38,31 +36,29 @@ the PDF document.  Example code for navigating interactive links and
 bookmarks, encrypting PDF files, extracting fonts, images, and
 searchable text, and rendering pages to image files is provided.
 
-%package -n %{develname}
+%package -n	%{devname}
 Summary:        Development files for %{name}
 Group:          Development/C
 Requires:       %{libname} = %{version}-%{release}
 Provides:       lib%{name} = %{version}-%{release}
 
-%description -n %{develname}
-The %{develname} package contains header files for developing
+%description -n	%{devname}
+The %{devname} package contains header files for developing
 applications that use %{libname}.
 
 %prep
-%setup -q -n %name-%version-source
+%setup -q -n %{name}-%{version}-source
 
 %build
 #gw pkg-config --cflags doesn't have the right openjpeg flags
-%make XCFLAGS="%optflags -I%_includedir/openjpeg-1.5"
+%make XCFLAGS="%{optflags} -I%{_includedir}/openjpeg-1.5"
 
 %install
-rm -rf %{buildroot}
 %makeinstall
-install -D -m 644 %SOURCE1 %buildroot%_datadir/applications/%name.desktop
-install -D -m 644 debian/mupdf.png %buildroot%_datadir/pixmaps/%name.png
+install -m644 %{SOURCE1} -D %{buildroot}%{_datadir}/applications/%{name}.desktop
+install -m644 debian/mupdf.png -D %{buildroot}%{_datadir}/pixmaps/%{name}.png
 
 %files
-%defattr(-,root,root)
 %doc COPYING README
 %{_bindir}/mudraw
 %{_bindir}/mupdf
@@ -70,12 +66,11 @@ install -D -m 644 debian/mupdf.png %buildroot%_datadir/pixmaps/%name.png
 %{_bindir}/mupdfextract
 %{_bindir}/mupdfinfo
 %{_bindir}/mupdfshow
-%_mandir/man1/*
-%_datadir/applications/%name.desktop
-%_datadir/pixmaps/%name.png
+%{_mandir}/man1/*
+%{_datadir}/applications/%{name}.desktop
+%{_datadir}/pixmaps/%{name}.png
 
-%files -n %{develname}
-%defattr(-,root,root)
+%files -n %{devname}
 %{_libdir}/libfitz.a
 %{_includedir}/fitz.h
 %{_includedir}/memento.h
