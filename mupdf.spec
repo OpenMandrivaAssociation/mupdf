@@ -9,10 +9,10 @@ Group:		Office
 URL:		http://mupdf.com/
 Source0:	http://mupdf.googlecode.com/files/%{name}-%{version}-source.tar.gz
 Source1:	mupdf.desktop
-BuildRequires:	libx11-devel
-BuildRequires:	libxext-devel
-BuildRequires:	zlib-devel
-BuildRequires:	libjpeg-devel
+BuildRequires:	pkgconfig(x11)
+BuildRequires:	pkgconfig(xext)
+BuildRequires:	pkgconfig(zlib)
+BuildRequires:	jpeg-devel
 BuildRequires:	freetype2-devel
 BuildRequires:	jbig2dec-devel
 BuildRequires:	openjpeg-devel >= 1.5
