@@ -1,22 +1,22 @@
 %define	libname	%mklibname %{name}
 %define	devname	%mklibname -d %{name}
 
-Name:           mupdf
-Version:        1.0
-Release:        2
-Summary:        MuPDF is a lightweight PDF viewer and toolkit written in portable C
-License:        GPLv3
-Group:          Office
-URL:            http://mupdf.com/
-Source0:        http://mupdf.googlecode.com/files/%{name}-%{version}-source.tar.gz
+Name:		mupdf
+Version:	1.0
+Release:	2
+Summary:	MuPDF is a lightweight PDF viewer and toolkit written in portable C
+License:	GPLv3
+Group:		Office
+URL:		http://mupdf.com/
+Source0:	http://mupdf.googlecode.com/files/%{name}-%{version}-source.tar.gz
 Source1:	mupdf.desktop
-BuildRequires:  libx11-devel
-BuildRequires:  libxext-devel
-BuildRequires:  zlib-devel
-BuildRequires:  libjpeg-devel
-BuildRequires:  freetype2-devel
-BuildRequires:  jbig2dec-devel
-BuildRequires:  openjpeg-devel >= 1.5
+BuildRequires:	libx11-devel
+BuildRequires:	libxext-devel
+BuildRequires:	zlib-devel
+BuildRequires:	libjpeg-devel
+BuildRequires:	freetype2-devel
+BuildRequires:	jbig2dec-devel
+BuildRequires:	openjpeg-devel >= 1.5
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
@@ -37,10 +37,10 @@ bookmarks, encrypting PDF files, extracting fonts, images, and
 searchable text, and rendering pages to image files is provided.
 
 %package -n	%{devname}
-Summary:        Development files for %{name}
-Group:          Development/C
-Requires:       %{libname} = %{version}-%{release}
-Provides:       lib%{name} = %{version}-%{release}
+Summary:	Development files for %{name}
+Group:		Development/C
+Requires:	%{libname} = %{version}-%{release}
+Provides:	lib%{name} = %{version}-%{release}
 
 %description -n	%{devname}
 The %{devname} package contains header files for developing
