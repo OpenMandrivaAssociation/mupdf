@@ -1,4 +1,3 @@
-%define	libname	%mklibname %{name}
 %define	devname	%mklibname -d %{name}
 
 Name:		mupdf
@@ -39,12 +38,11 @@ searchable text, and rendering pages to image files is provided.
 %package -n	%{devname}
 Summary:	Development files for %{name}
 Group:		Development/C
-Requires:	%{libname} = %{version}-%{release}
 Provides:	lib%{name} = %{version}-%{release}
 
 %description -n	%{devname}
 The %{devname} package contains header files for developing
-applications that use %{libname}.
+applications that use MuPDF toolkit.
 
 %prep
 %setup -q -n %{name}-%{version}-source
