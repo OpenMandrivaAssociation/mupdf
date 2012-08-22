@@ -1,8 +1,8 @@
 %define	devname	%mklibname -d %{name}
 
 Name:		mupdf
-Version:	1.0
-Release:	2
+Version:	1.1
+Release:	1
 Summary:	MuPDF is a lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
@@ -58,12 +58,9 @@ install -m644 debian/mupdf.png -D %{buildroot}%{_datadir}/pixmaps/%{name}.png
 
 %files
 %doc COPYING README
+%{_bindir}/mubusy
 %{_bindir}/mudraw
 %{_bindir}/mupdf
-%{_bindir}/mupdfclean
-%{_bindir}/mupdfextract
-%{_bindir}/mupdfinfo
-%{_bindir}/mupdfshow
 %{_mandir}/man1/*
 %{_datadir}/applications/%{name}.desktop
 %{_datadir}/pixmaps/%{name}.png
