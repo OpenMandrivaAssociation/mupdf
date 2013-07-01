@@ -3,7 +3,7 @@
 Name:		mupdf
 Version:	1.1
 Release:	1
-Summary:	MuPDF is a lightweight PDF viewer and toolkit written in portable C
+Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
 URL:		http://mupdf.com/
