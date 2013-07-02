@@ -13,7 +13,7 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	jpeg-devel
-BuildRequires:	freetype2-devel
+BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	jbig2dec-devel
 BuildRequires:	openjpeg-devel >= 1.5
 
