@@ -50,7 +50,7 @@ applications that use MuPDF toolkit.
 
 %build
 %setup_compile_flags
-%make
+%make -j1
 
 %install
 %makeinstall_std
