@@ -1,8 +1,8 @@
 %define	devname	%mklibname -d %{name}
 
 Name:		mupdf
-Version:	1.1
-Release:	2
+Version:	1.3
+Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
@@ -16,6 +16,7 @@ BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	jbig2dec-devel
 BuildRequires:	openjpeg-devel >= 1.5
+BuildRequires:	desktop-file-utils
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
@@ -48,13 +49,15 @@ applications that use MuPDF toolkit.
 %setup -q -n %{name}-%{version}-source
 
 %build
-#gw pkg-config --cflags doesn't have the right openjpeg flags
-%make XCFLAGS="%{optflags} -I%{_includedir}/openjpeg-1.5"
+%setup_compile_flags
+%make
 
 %install
-%makeinstall
-install -m644 %{SOURCE1} -D %{buildroot}%{_datadir}/applications/%{name}.desktop
-install -m644 debian/mupdf.png -D %{buildroot}%{_datadir}/pixmaps/%{name}.png
+%makeinstall_std
+install -D -m 644 debian/mupdf.png %{buildroot}%{_datadir}/pixmaps/%{name}.png
+
+desktop-file-install \
+	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE1}
 
 %files
 %doc COPYING README
