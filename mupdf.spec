@@ -9,6 +9,7 @@ Group:		Office
 URL:		http://mupdf.com/
 Source0:	http://mupdf.googlecode.com/files/%{name}-%{version}-source.tar.gz
 Source1:	mupdf.desktop
+Patch0:		mupdf-1.3-source-fix-Makefile.patch
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
@@ -47,6 +48,7 @@ applications that use MuPDF toolkit.
 
 %prep
 %setup -q -n %{name}-%{version}-source
+%apply_patches
 
 %build
 %setup_compile_flags
