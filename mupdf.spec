@@ -49,6 +49,9 @@ applications that use MuPDF toolkit.
 %setup -q -n %{name}-%{version}-source
 
 %build
+# do not use the inlined copies of build dpendencies
+rm -rf thirdparty
+
 %setup_compile_flags
 %make -j1 verbose=1
 
