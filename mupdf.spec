@@ -18,6 +18,7 @@ BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	jbig2dec-devel
 BuildRequires:	openjpeg-devel >= 1.5
 BuildRequires:	desktop-file-utils
+BuildRequires:	v8-devel
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
