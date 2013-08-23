@@ -51,8 +51,11 @@ applications that use MuPDF toolkit.
 %apply_patches
 
 %build
+# do not use the inlined copies of build dpendencies
+rm -rf thirdparty
+
 %setup_compile_flags
-%make
+%make -j1 verbose=1
 
 %install
 %makeinstall_std
