@@ -1,0 +1,13 @@
+--- mupdf-1.10a-source/source/fitz/load-jpx.c.orig	2016-12-13 14:18:03.800137794 +0000
++++ mupdf-1.10a-source/source/fitz/load-jpx.c	2016-12-13 14:18:15.672724093 +0000
+@@ -481,10 +481,6 @@
+ 
+ #else /* HAVE_LURATECH */
+ 
+-/* Without the definition of OPJ_STATIC, compilation fails on windows
+- * due to the use of __stdcall. We believe it is required on some
+- * linux toolchains too. */
+-#define OPJ_STATIC
+ #ifndef _MSC_VER
+ #define OPJ_HAVE_STDINT_H
+ #endif

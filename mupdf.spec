@@ -1,4 +1,5 @@
 %define	devname	%mklibname -d %{name}
+%define debug_package %{nil}
 
 Name:		mupdf
 Version:	1.10a
@@ -9,6 +10,7 @@ Group:		Office
 URL:		http://mupdf.com/
 Source0:	http://mupdf.com/downloads/%{name}-%{version}-source.tar.gz
 Source1:	mupdf.desktop
+Patch1:		mupdf-1.10-no_opj_static.patch
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
@@ -54,30 +56,27 @@ applications that use MuPDF toolkit.
 rm -rf thirdparty
 
 %setup_compile_flags
-export CFLAGS="$CFLAGS -DJBIG_NO_MOMENTO"
-%make -j1 verbose=1 
+%make -j1 verbose=yes
 
 %install
-%makeinstall_std
+%makeinstall_std prefix=%{_prefix} libdir=%{_libdir}
 
 desktop-file-install \
 	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE1}
 
 %files
 %doc COPYING README
-%{_bindir}/mubusy
-%{_bindir}/mudraw
-%{_bindir}/mupdf
+%{_bindir}/mujstest
+%{_bindir}/mutool
+%{_bindir}/muraster
+%{_bindir}/mupdf-x11
 %{_mandir}/man1/*
 %{_datadir}/applications/%{name}.desktop
 
 %files -n %{devname}
-%{_libdir}/libfitz.a
-%{_includedir}/fitz.h
-%{_includedir}/memento.h
-%{_includedir}/mucbz.h
-%{_includedir}/mupdf.h
-%{_includedir}/muxps.h
+%{_libdir}/libmupdf.a
+%{_libdir}/libmupdfthird.a
+%{_includedir}/mupdf
 
 
 %changelog
