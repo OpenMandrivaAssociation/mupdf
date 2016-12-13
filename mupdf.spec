@@ -1,22 +1,21 @@
 %define	devname	%mklibname -d %{name}
 
 Name:		mupdf
-Version:	1.3
-Release:	2
+Version:	1.10a
+Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
 URL:		http://mupdf.com/
-Source0:	http://mupdf.googlecode.com/files/%{name}-%{version}-source.tar.gz
+Source0:	http://mupdf.com/downloads/%{name}-%{version}-source.tar.gz
 Source1:	mupdf.desktop
-Patch0:		mupdf-1.3-source-fix-Makefile.patch
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	jbig2dec-devel
-BuildRequires:	openjpeg-devel >= 1.5
+BuildRequires:	openjpeg2-devel
 BuildRequires:	desktop-file-utils
 BuildRequires:	v8-devel
 
@@ -56,11 +55,11 @@ applications that use MuPDF toolkit.
 rm -rf thirdparty
 
 %setup_compile_flags
-%make -j1 verbose=1
+export CFLAGS="$CFLAGS -DJBIG_NO_MOMENTO"
+%make -j1 verbose=1 
 
 %install
 %makeinstall_std
-install -D -m 644 debian/mupdf.png %{buildroot}%{_datadir}/pixmaps/%{name}.png
 
 desktop-file-install \
 	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE1}
@@ -72,7 +71,6 @@ desktop-file-install \
 %{_bindir}/mupdf
 %{_mandir}/man1/*
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
 
 %files -n %{devname}
 %{_libdir}/libfitz.a
