@@ -1,24 +1,25 @@
 %define	devname	%mklibname -d %{name}
+%define debug_package %{nil}
 
 Name:		mupdf
-Version:	1.3
-Release:	2
+Version:	1.11
+Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
 URL:		http://mupdf.com/
-Source0:	http://mupdf.googlecode.com/files/%{name}-%{version}-source.tar.gz
+Source0:	http://mupdf.com/downloads/%{name}-%{version}-source.tar.gz
 Source1:	mupdf.desktop
-Patch0:		mupdf-1.3-source-fix-Makefile.patch
+Patch1:		mupdf-1.10-no_opj_static.patch
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
+BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	jbig2dec-devel
-BuildRequires:	openjpeg-devel >= 1.5
+BuildRequires:	openjpeg2-devel
 BuildRequires:	desktop-file-utils
-BuildRequires:	v8-devel
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
@@ -56,73 +57,25 @@ applications that use MuPDF toolkit.
 rm -rf thirdparty
 
 %setup_compile_flags
-%make -j1 verbose=1
+%make -j1 verbose=yes
 
 %install
-%makeinstall_std
-install -D -m 644 debian/mupdf.png %{buildroot}%{_datadir}/pixmaps/%{name}.png
+%makeinstall_std prefix=%{_prefix} libdir=%{_libdir}
 
 desktop-file-install \
 	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE1}
 
 %files
 %doc COPYING README
-%{_bindir}/mubusy
-%{_bindir}/mudraw
-%{_bindir}/mupdf
+%{_bindir}/mujstest
+%{_bindir}/mutool
+%{_bindir}/muraster
+%{_bindir}/mupdf-x11
+%{_bindir}/mupdf-x11-curl
 %{_mandir}/man1/*
 %{_datadir}/applications/%{name}.desktop
-%{_datadir}/pixmaps/%{name}.png
 
 %files -n %{devname}
-%{_libdir}/libfitz.a
-%{_includedir}/fitz.h
-%{_includedir}/memento.h
-%{_includedir}/mucbz.h
-%{_includedir}/mupdf.h
-%{_includedir}/muxps.h
-
-
-%changelog
-* Wed Aug 22 2012 Götz Waschk <waschk@mandriva.org> 1.1-1
-+ Revision: 815596
-- new version
-- update file list
-
-* Thu May 31 2012 Per Øyvind Karlsen <peroyvind@mandriva.org> 1.0-2
-+ Revision: 801569
-- use pkgconfig() deps for buildrequires
-- drop bogus dependency
-- cleanups
-
-  + Götz Waschk <waschk@mandriva.org>
-    - add cbz to supported formats
-    - bump openjpeg dep
-
-* Wed May 02 2012 Götz Waschk <waschk@mandriva.org> 1.0-1
-+ Revision: 795137
-- update file list
-- fix cflags for optimization and openjpeg header
-- new version
-
-* Wed Sep 28 2011 Götz Waschk <waschk@mandriva.org> 0.9-2
-+ Revision: 701611
-- install an icon file
-- add desktop entry from Fedora
-
-* Wed Sep 28 2011 Götz Waschk <waschk@mandriva.org> 0.9-1
-+ Revision: 701609
-- new version
-- update license
-- fix source URL
-- drop patch
-- fix installation
-- add man pages, xpsdraw and new development files
-
-* Wed Aug 25 2010 Florent Monnier <blue_prawn@mandriva.org> 0.7-1mdv2011.0
-+ Revision: 573357
-- patch for lib64
-- BuildRequires: libxext-devel
-- BuildRequires: libx11-devel
-- import mupdf
-
+%{_libdir}/libmupdf.a
+%{_libdir}/libmupdfthird.a
+%{_includedir}/mupdf

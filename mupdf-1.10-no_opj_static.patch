@@ -1,0 +1,10 @@
+--- mupdf-1.11-source/source/fitz/load-jpx.c.0001~	2017-09-09 13:47:26.036457917 +0200
++++ mupdf-1.11-source/source/fitz/load-jpx.c	2017-09-09 13:47:57.099362534 +0200
+@@ -444,7 +444,6 @@ fz_load_jpx_info(fz_context *ctx, unsign
+ 
+ #else /* HAVE_LURATECH */
+ 
+-#define OPJ_STATIC
+ #define OPJ_HAVE_INTTYPES_H
+ #if !defined(_WIN32) && !defined(_WIN64)
+ #define OPJ_HAVE_STDINT_H
