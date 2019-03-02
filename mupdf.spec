@@ -20,6 +20,7 @@ BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(lcms2mt)
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(harfbuzz)
 BuildRequires:	jbig2dec-devel
 BuildRequires:	openjpeg2-devel
 BuildRequires:	desktop-file-utils
