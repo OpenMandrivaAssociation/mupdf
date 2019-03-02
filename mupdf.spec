@@ -2,19 +2,22 @@
 %define debug_package %{nil}
 
 Name:		mupdf
-Version:	1.11
-Release:	2
+Version:	1.14.0
+Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
 URL:		http://mupdf.com/
-Source0:	http://mupdf.com/downloads/%{name}-%{version}-source.tar.gz
-Source1:	mupdf.desktop
-Patch1:		mupdf-1.10-no_opj_static.patch
+Source0:	https://mupdf.com/downloads/archive/mupdf-%{version}-source.tar.xz
+Source1:	https://mujs.com/downloads/mujs-1.0.5.tar.xz
+Source10:	mupdf.desktop
+# Adapt to API changes in current lcms2mt
+Patch0:		mupdf-1.14.0-lcms2mt.patch
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(libcurl)
+BuildRequires:	pkgconfig(lcms2mt)
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	jbig2dec-devel
@@ -49,33 +52,33 @@ The %{devname} package contains header files for developing
 applications that use MuPDF toolkit.
 
 %prep
-%setup -q -n %{name}-%{version}-source
-%apply_patches
+%autosetup -n %{name}-%{version}-source -p1 -a 1
 
 %build
 # do not use the inlined copies of build dpendencies
 rm -rf thirdparty
+mkdir thirdparty
+mv mujs-1.0.5 thirdparty/mujs
 
 %setup_compile_flags
-%make -j1 verbose=yes
+%make -j1 verbose=yes USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes SYS_LCMS2_CFLAGS="-llcms2mt"
 
 %install
-%makeinstall_std prefix=%{_prefix} libdir=%{_libdir}
+%make_install prefix=%{_prefix} libdir=%{_libdir} USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes
 
 desktop-file-install \
-	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE1}
+	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE10}
 
 %files
 %doc COPYING README
-%{_bindir}/mujstest
 %{_bindir}/mutool
-%{_bindir}/muraster
 %{_bindir}/mupdf-x11
-%{_bindir}/mupdf-x11-curl
+%{_bindir}/mupdf-gl
 %{_mandir}/man1/*
 %{_datadir}/applications/%{name}.desktop
 
 %files -n %{devname}
 %{_libdir}/libmupdf.a
-%{_libdir}/libmupdfthird.a
+%{_libdir}/libmupdf-third.a
 %{_includedir}/mupdf
+%doc %{_docdir}/mupdf
