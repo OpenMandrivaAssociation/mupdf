@@ -19,6 +19,7 @@ BuildRequires:	pkgconfig(zlib)
 BuildRequires:	pkgconfig(libcurl)
 BuildRequires:	pkgconfig(lcms2mt)
 BuildRequires:	pkgconfig(glut)
+BuildRequires:	pkgconfig(glu)
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(harfbuzz)
