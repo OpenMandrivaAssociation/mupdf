@@ -1,0 +1,35 @@
+diff -up mupdf-1.21.0-source/Makefile.omv~ mupdf-1.21.0-source/Makefile
+--- mupdf-1.21.0-source/Makefile.omv~	2022-11-08 01:10:44.174311313 +0100
++++ mupdf-1.21.0-source/Makefile	2022-11-08 01:11:08.907766439 +0100
+@@ -21,7 +21,7 @@ include Makethird
+ # Do not specify CFLAGS or LIBS on the make invocation line - specify
+ # XCFLAGS or XLIBS instead. Make ignores any lines in the makefile that
+ # set a variable that was set on the command line.
+-CFLAGS += $(XCFLAGS) -Iinclude
++CFLAGS += $(XCFLAGS) -Iinclude -I/usr/include/freetype2 -I/usr/include/harfbuzz
+ LIBS += $(XLIBS) -lm
+ 
+ ifneq ($(threading),no)
+diff -up mupdf-1.21.0-source/source/fitz/encode-basic.c.omv~ mupdf-1.21.0-source/source/fitz/encode-basic.c
+--- mupdf-1.21.0-source/source/fitz/encode-basic.c.omv~	2022-11-08 01:10:05.324100646 +0100
++++ mupdf-1.21.0-source/source/fitz/encode-basic.c	2022-11-08 01:10:14.550820157 +0100
+@@ -20,6 +20,8 @@
+ // Artifex Software, Inc., 1305 Grant Avenue - Suite 200, Novato,
+ // CA 94945, U.S.A., +1(415)492-9861, for further information.
+ 
++#include <limits.h>
++
+ #include "mupdf/fitz.h"
+ 
+ #include "z-imp.h"
+diff -up mupdf-1.21.0-source/source/fitz/output-ps.c.omv~ mupdf-1.21.0-source/source/fitz/output-ps.c
+--- mupdf-1.21.0-source/source/fitz/output-ps.c.omv~	2022-11-08 01:39:21.318483427 +0100
++++ mupdf-1.21.0-source/source/fitz/output-ps.c	2022-11-08 01:39:27.488517523 +0100
+@@ -20,6 +20,7 @@
+ // Artifex Software, Inc., 1305 Grant Avenue - Suite 200, Novato,
+ // CA 94945, U.S.A., +1(415)492-9861, for further information.
+ 
++#include <limits.h>
+ #include "mupdf/fitz.h"
+ 
+ #include "z-imp.h"

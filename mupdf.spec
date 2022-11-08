@@ -2,17 +2,15 @@
 %define debug_package %{nil}
 
 Name:		mupdf
-Version:	1.14.0
+Version:	1.21.0
 Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
 URL:		http://mupdf.com/
-Source0:	https://mupdf.com/downloads/archive/mupdf-%{version}-source.tar.xz
-Source1:	https://mujs.com/downloads/mujs-1.0.5.tar.xz
+Source0:	https://mupdf.com/downloads/archive/mupdf-%{version}-source.tar.lz
 Source10:	mupdf.desktop
-# Adapt to API changes in current lcms2mt
-Patch0:		mupdf-1.14.0-lcms2mt.patch
+Patch0:		mupdf-1.21.0-compile.patch
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
@@ -55,19 +53,35 @@ The %{devname} package contains header files for developing
 applications that use MuPDF toolkit.
 
 %prep
-%autosetup -n %{name}-%{version}-source -p1 -a 1
+%autosetup -n %{name}-%{version}-source -p1
 
 %build
-# do not use the inlined copies of build dpendencies
-rm -rf thirdparty
-mkdir thirdparty
-mv mujs-1.0.5 thirdparty/mujs
+cd thirdparty
+# Force system libs
+#curl
+#extract
+#freeglut
+#freetype
+#gumbo-parser
+#harfbuzz
+#jbig2dec
+#lcms2
+#leptonica
+#libjpeg
+#mujs
+#openjpeg
+#README
+#tesseract
+#tesseract.txt
+#zlib
+rm -rf curl freeglut freetype harfbuzz jbig2dec lcms2 leptonica libjpeg openjpeg tesseract zlib
+cd ..
 
 %setup_compile_flags
-%make -j1 verbose=yes USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes SYS_LCMS2_CFLAGS="-llcms2mt"
+%make -j1 verbose=yes USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes SYS_LCMS2_CFLAGS="-llcms2mt" USE_SYSTEM_GUMBO=no LD=ld.bfd
 
 %install
-%make_install prefix=%{_prefix} libdir=%{_libdir} USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes
+%make_install prefix=%{_prefix} libdir=%{_libdir} USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes USE_SYSTEM_GUMBO=no LD=ld.bfd
 
 desktop-file-install \
 	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE10}
@@ -75,7 +89,9 @@ desktop-file-install \
 %files
 %doc COPYING README
 %{_bindir}/mutool
+%{_bindir}/muraster
 %{_bindir}/mupdf-x11
+%{_bindir}/mupdf-x11-curl
 %{_bindir}/mupdf-gl
 %{_mandir}/man1/*
 %{_datadir}/applications/%{name}.desktop
