@@ -2,7 +2,7 @@
 %define debug_package %{nil}
 
 Name:		mupdf
-Version:	1.21.0
+Version:	1.21.1
 Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
