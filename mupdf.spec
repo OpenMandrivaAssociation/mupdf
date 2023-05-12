@@ -2,8 +2,8 @@
 %define debug_package %{nil}
 
 Name:		mupdf
-Version:	1.21.1
-Release:	2
+Version:	1.22.1
+Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
@@ -19,6 +19,7 @@ BuildRequires:	pkgconfig(lcms2)
 BuildRequires:	pkgconfig(lcms2mt)
 BuildRequires:	pkgconfig(glut)
 BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(mujs)
 BuildRequires:	jpeg-devel
 BuildRequires:	pkgconfig(freetype2)
 BuildRequires:	pkgconfig(harfbuzz)
