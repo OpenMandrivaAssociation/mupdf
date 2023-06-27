@@ -1,31 +1,39 @@
 %define	devname	%mklibname -d %{name}
-%define debug_package %{nil}
+
+%bcond_with extract
+%bcond_with gumbo-parser
+%bcond_without lcms2
+%bcond_with	mujs
+%bcond_without jpegxr
 
 Name:		mupdf
-Version:	1.22.1
+Version:	1.22.2
 Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
 URL:		http://mupdf.com/
-Source0:	https://mupdf.com/downloads/archive/mupdf-%{version}-source.tar.lz
+Source0:	https://mupdf.com/downloads/archive/mupdf-%{version}-source.tar.gz
 Source10:	mupdf.desktop
+Source11:	mupdf-gl.desktop
 Patch0:		mupdf-1.21.0-compile.patch
+
+BuildRequires:	imagemagick
+BuildRequires:	jxrlib-devel
+BuildRequires:	pkgconfig(glu)
+BuildRequires:	pkgconfig(glut)
+BuildRequires:	pkgconfig(freetype2)
+BuildRequires:	pkgconfig(harfbuzz)
+BuildRequires:	pkgconfig(jbig2dec)
+BuildRequires:	pkgconfig(lcms2)
+BuildRequires:	pkgconfig(lcms2mt)
+BuildRequires:	pkgconfig(libcurl)
+BuildRequires:	pkgconfig(libjpeg)
+BuildRequires:	pkgconfig(libopenjp2)
+BuildRequires:	pkgconfig(mujs)
 BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
-BuildRequires:	pkgconfig(libcurl)
-BuildRequires:	pkgconfig(lcms2)
-BuildRequires:	pkgconfig(lcms2mt)
-BuildRequires:	pkgconfig(glut)
-BuildRequires:	pkgconfig(glu)
-BuildRequires:	pkgconfig(mujs)
-BuildRequires:	jpeg-devel
-BuildRequires:	pkgconfig(freetype2)
-BuildRequires:	pkgconfig(harfbuzz)
-BuildRequires:	jbig2dec-devel
-BuildRequires:	openjpeg2-devel
-BuildRequires:	desktop-file-utils
 BuildRequires:	lzip
 
 %description
@@ -46,6 +54,17 @@ the PDF document.  Example code for navigating interactive links and
 bookmarks, encrypting PDF files, extracting fonts, images, and
 searchable text, and rendering pages to image files is provided.
 
+%files
+%license COPYING
+%doc README
+%{_bindir}/*
+%{_datadir}/applications/%{name}*.desktop
+%{_iconsdir}/hicolor/*/apps/*
+%{_datadir}/pixmaps/%{name}*.xpm
+%{_mandir}/man1/*.1.*
+
+#---------------------------------------------------------------------------
+
 %package -n	%{devname}
 Summary:	Development files for %{name}
 Group:		Development/C
@@ -55,52 +74,75 @@ Provides:	lib%{name} = %{version}-%{release}
 The %{devname} package contains header files for developing
 applications that use MuPDF toolkit.
 
-%prep
-%autosetup -n %{name}-%{version}-source -p1
-
-%build
-cd thirdparty
-# Force system libs
-#curl
-#extract
-#freeglut
-#freetype
-#gumbo-parser
-#harfbuzz
-#jbig2dec
-#lcms2
-#leptonica
-#libjpeg
-#mujs
-#openjpeg
-#README
-#tesseract
-#tesseract.txt
-#zlib
-rm -rf curl freeglut freetype harfbuzz jbig2dec lcms2 leptonica libjpeg openjpeg tesseract zlib
-cd ..
-
-%setup_compile_flags
-%make -j1 verbose=yes USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes SYS_LCMS2_CFLAGS="-llcms2mt" USE_SYSTEM_GUMBO=no LD=ld.bfd
-
-%install
-%make_install prefix=%{_prefix} libdir=%{_libdir} USE_SYSTEM_LIBS=yes USE_SYSTEM_LCMS2=yes USE_SYSTEM_GUMBO=no LD=ld.bfd
-
-desktop-file-install \
-	 --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE10}
-
-%files
-%doc COPYING README
-%{_bindir}/mutool
-%{_bindir}/muraster
-%{_bindir}/mupdf-x11
-%{_bindir}/mupdf-x11-curl
-%{_bindir}/mupdf-gl
-%{_mandir}/man1/*
-%{_datadir}/applications/%{name}.desktop
-
 %files -n %{devname}
+%doc %{_docdir}/mupdf
 %{_libdir}/libmupdf.a
 %{_libdir}/libmupdf-third.a
 %{_includedir}/mupdf
-%doc %{_docdir}/mupdf
+
+#---------------------------------------------------------------------------
+
+%prep
+%autosetup -n %{name}-%{version}-source -p1
+
+# Force system libs except:
+#	extract
+#	gumbo-parser
+#	mujs
+rm -rf thirdparty/{curl,freeglut,freetype,harfbuzz,jbig2dec,lcms2,leptonica,libjpeg,openjpeg,tesseract,zlib}
+
+%build
+%setup_compile_flags
+export XCFLAGS="%{optflags} -fPIC"
+%make \
+	build=debug \
+	verbose=yes \
+	USE_SYSTEM_LIBS=yes \
+	USE_SYSTEM_EXTRACT=%{?with_extract:yes}%{!?with_extract:no} \
+	USE_SYSTEM_GUMBO=%{?with_gumbo-parser:yes}%{!?with_gumbo-parser:no} \
+	USE_SYSTEM_JPEGXR=%{?with_jpegxr:yes}%{!?with_jpegxr:no} \
+	USE_SYSTEM_LCMS2=%{?with_lcms2:yes}%{!?with_lcms2:no} \
+	USE_SYSTEM_MUJS=%{?with_mujs:yes}%{!?with_mujs:no} \
+	SYS_LCMS2_CFLAGS="-llcms2mt" \
+	LD=ld.bfd
+
+%install
+%make_install \
+	prefix=%{_prefix} \
+	libdir=%{_libdir} \
+	build=debug \
+	verbose=yes \
+	USE_SYSTEM_LIBS=yes \
+	USE_SYSTEM_EXTRACT=%{?with_extract:yes}%{!?with_extract:no} \
+	USE_SYSTEM_GUMBO=%{?with_gumbo-parser:yes}%{!?with_gumbo-parser:no} \
+	USE_SYSTEM_JPEGXR=%{?with_jpegxr:yes}%{!?with_jpegxr:no} \
+	USE_SYSTEM_LCMS2=%{?with_lcms2:yes}%{!?with_lcms2:no} \
+	USE_SYSTEM_MUJS=%{?with_mujs:yes}%{!?with_mujs:no} \
+	SYS_LCMS2_CFLAGS="-llcms2mt" \
+	LD=ld.bfd
+
+# icons
+for d in 16 32 48 64 72 128 256
+do
+	install -dm 0755 %{buildroot}%{_iconsdir}/hicolor/${d}x${d}/apps/
+	convert -background none -size "${d}x${d}" docs/logo/mupdf-logo.svg \
+		%{buildroot}%{_iconsdir}/hicolor/${d}x${d}/apps/%{name}.png
+	cp -a %{buildroot}%{_iconsdir}/hicolor/${d}x${d}/apps/%{name}.png \
+		%{buildroot}%{_iconsdir}/hicolor/${d}x${d}/apps/%{name}-gl.png
+done
+install -dm 0755 %{buildroot}%{_datadir}/pixmaps/
+convert -size 32x32 docs/logo/mupdf-logo.svg %{buildroot}%{_datadir}/pixmaps/%{name}.xpm
+cp -a %{buildroot}%{_datadir}/pixmaps/%{name}.xpm %{buildroot}%{_datadir}/pixmaps/%{name}-gl.xpm
+install -dm 0755 %{buildroot}%{_iconsdir}/hicolor/scalable/apps
+install -pm 0644 docs/logo/mupdf-logo.svg %{buildroot}%{_iconsdir}/hicolor/scalable/apps/%{name}.svg
+install -pm 0644 docs/logo/mupdf-logo.svg %{buildroot}%{_iconsdir}/hicolor/scalable/apps/%{name}-gl.svg
+
+# .desktop(s)
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE10}
+desktop-file-install --dir=%{buildroot}%{_datadir}/applications/ %{SOURCE11}
+
+# add symlink for mupdf
+pushd %{buildroot}/%{_bindir}
+ln -s %{name}-x11 %{name}
+popd
+
