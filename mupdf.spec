@@ -12,7 +12,7 @@ Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
-URL:		http://mupdf.com/
+URL:		https://mupdf.com/
 Source0:	https://mupdf.com/downloads/archive/mupdf-%{version}-source.tar.gz
 Source10:	mupdf.desktop
 Source11:	mupdf-gl.desktop
