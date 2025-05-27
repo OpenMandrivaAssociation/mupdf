@@ -7,7 +7,7 @@
 %bcond_without jpegxr
 
 Name:		mupdf
-Version:	1.25.6
+Version:	1.26.1
 Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
