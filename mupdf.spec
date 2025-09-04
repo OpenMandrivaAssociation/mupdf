@@ -35,6 +35,7 @@ BuildRequires:	pkgconfig(x11)
 BuildRequires:	pkgconfig(xext)
 BuildRequires:	pkgconfig(zlib)
 BuildRequires:	lzip
+BuildRequires:	desktop-file-utils
 
 %description
 MuPDF is a lightweight PDF viewer and toolkit written in portable C.
