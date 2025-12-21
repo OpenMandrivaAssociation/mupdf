@@ -18,6 +18,7 @@ Source10:	mupdf.desktop
 Source11:	mupdf-gl.desktop
 #Patch0:		mupdf-1.21.0-compile.patch
 
+BuildRequires:	make
 BuildRequires:	imagemagick
 BuildRequires:	jxrlib-devel
 BuildRequires:	pkgconfig(glu)
