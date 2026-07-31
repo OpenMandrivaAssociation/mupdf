@@ -7,8 +7,8 @@
 %bcond_without jpegxr
 
 Name:		mupdf
-Version:	1.26.7
-Release:	2
+Version:	1.28.1
+Release:	1
 Summary:	Lightweight PDF viewer and toolkit written in portable C
 License:	GPLv3
 Group:		Office
@@ -85,7 +85,7 @@ applications that use MuPDF toolkit.
 #---------------------------------------------------------------------------
 
 %prep
-%autosetup -n %{name}-%{version}-source -p1
+%autosetup -n mupdf-1.28.1-source -p1
 
 # Force system libs except:
 #	extract
